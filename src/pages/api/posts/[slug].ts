@@ -25,6 +25,50 @@ export const GET: APIRoute = async ({ params, request }) => {
   })
 }
 
+export const POST: APIRoute = async ({ request }) => {
+  const body = await request.json()
+
+  return new Response(JSON.stringify({ body, method: 'POST' }), {
+    status: 200,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+}
+
+export const PUT: APIRoute = async ({ request }) => {
+  const body = await request.json()
+
+  return new Response(JSON.stringify({ body, method: 'PUT' }), {
+    status: 200,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+}
+
+export const PATCH: APIRoute = async ({ request }) => {
+  const body = await request.json()
+
+  return new Response(JSON.stringify({ body, method: 'PATCH' }), {
+    status: 200,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+}
+
+export const DELETE: APIRoute = async ({ request, params }) => {
+  const { slug } = params
+
+  return new Response(JSON.stringify({ slug, method: 'DELETE' }), {
+    status: 200,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+}
+
 // export const getStaticPaths: GetStaticPaths = async () => {
 //   const posts = await getCollection('blog')
 
