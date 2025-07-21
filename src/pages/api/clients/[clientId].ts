@@ -3,19 +3,40 @@ import { Clients, db, eq } from 'astro:db'
 export const prerender = false
 
 export const GET: APIRoute = async ({ request, params }) => {
-  const { clientId } = params
+  const clientId = params.clientId ?? ''
 
-  const body = {
-    method: 'GET',
-    clientId,
+  try {
+    const client = await db
+      .select()
+      .from(Clients)
+      .where(eq(Clients.id, +clientId))
+
+    if (client.length === 0) {
+      return new Response(
+        JSON.stringify({ msg: `Client with id ${clientId} not found` }),
+        {
+          status: 404,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+    }
+
+    return new Response(JSON.stringify(client.at(0)), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+  } catch (error) {
+    return new Response(JSON.stringify({ msg: 'No body provided' }), {
+      status: 400,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
   }
-
-  return new Response(JSON.stringify(body), {
-    status: 200,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
 }
 export const PATCH: APIRoute = async ({ request, params }) => {
   const clientId = params.clientId ?? ''
