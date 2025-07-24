@@ -5,9 +5,10 @@
   "scripts": {
     "dev:local": "astro dev",
     "dev": "astro dev --remote",
-    "build": "astro build --remote",
+    "build": "bun run db:push && astro build --remote",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "db:push": "astro db push --remote"
   },
   "dependencies": {
     "@astrojs/db": "^0.15.0",
