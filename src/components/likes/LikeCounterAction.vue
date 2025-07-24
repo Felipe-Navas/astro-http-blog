@@ -61,10 +61,13 @@ const likePost = async () => {
 }
 
 const getCurrentLikes = async () => {
-  const res = await fetch(`/api/posts/likes/${props.postId}`)
-  if (!res.ok) return
+  const { data, error } = await actions.getPostLikes(props.postId)
 
-  const data = await res.json()
+  if (error) return alert(error)
+
+  // const res = await fetch(`/api/posts/likes/${props.postId}`)
+  // if (!res.ok) return
+  // const data = await res.json()
 
   likeCount.value = data.likes
   isLoading.value = false
